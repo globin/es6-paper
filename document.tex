@@ -1,14 +1,50 @@
+% arara: pdflatex
 \documentclass{bioinfo}
-\copyrightyear{2005}
-\pubyear{2005}
+\copyrightyear{2015}
+\pubyear{2015}
+
+\usepackage{hyperref}
+\newcommand\fnurl[2]{%
+  \href{#1}{#2}\footnote{\url{#1}}%
+}
+
+\usepackage{listings}
+\usepackage[usenames,dvipsnames,svgnames,table,x11names]{xcolor}
+\lstdefinelanguage{EcmaScript} {
+    morekeywords={
+        break,class,const,continue,delete,do,extends,get,set,while,export,for,in,function,
+        if,else,import,in,instanceOf,label,let,new,of,return,switch,this,
+        throw,try,catch,typeof,var,void,with,yield
+    },
+    sensitive=false,
+    morecomment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    morestring=[b]",
+    morestring=[d]'
+    morestring=[d]`
+}
+
+\lstset{
+    basicstyle=\footnotesize\ttfamily,
+    showstringspaces=false,
+    keywordstyle=\ttfamily\bfseries\color{CadetBlue},
+    identifierstyle=\ttfamily,
+    stringstyle=\ttfamily\color{OliveGreen},
+    commentstyle=\color{Gray},
+    language=EcmaScript,
+    xleftmargin=0.2cm,
+    frame=tb,
+    framesep=5pt,
+    rulecolor=\color{LightGray}
+}
 
 \begin{document}
 \firstpage{1}
 
-\title[short Title]{This is a title}
-\author[Sample \textit{et~al}]{Corresponding Author\,$^{1,*}$, Co-Author\,$^{2}$ and Co-Author\,$^2$\footnote{to whom correspondence should be addressed}}
+\title[short Title]{ES6 --- Modern Javascript}
+\author[Sample \textit{et~al}]{Jan Smarschevski\,$^{1}$, Robin Gloster\,$^{2}$}
 \address{$^{1}$Department of XXXXXXX, Address XXXX etc.\\
-$^{2}$Department of XXXXXXXX, Address XXXX etc.}
+$^{2}$robin.gloster@tum.de}
 
 \history{Received on XXXXX; revised on XXXXX; accepted on XXXXX}
 
@@ -31,157 +67,131 @@ Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Tex
 \section{Contact:} \href{name@bio.com}{name@bio.com}
 \end{abstract}
 
-\section{Introduction}
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure~\ref{fig:01} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citep{Bag01} wants to know about …… text follows.
-
-\begin{equation}
-\sum x+ y =Z\label{eq:01}
-\end{equation}
-
-
-
-
-
-
-\section{Approach}
-
-Equation~(\ref{eq:01}) Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text ……
-
-
-\begin{methods}
-\section{Methods}
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-
-\begin{itemize}
-\item for bulleted list, use itemize
-\item for bulleted list, use itemize
-\item for bulleted list, use itemize
-\end{itemize}
-
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text.
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-
-
-
-\begin{table}[!t]
-\processtable{This is table caption\label{Tab:01}}
-{\begin{tabular}{llll}\toprule
-head1 & head2 & head3 & head4\\\midrule
-row1 & row1 & row1 & row1\\
-row2 & row2 & row2 & row2\\
-row3 & row3 & row3 & row3\\
-row4 & row4 & row4 & row4\\\botrule
-\end{tabular}}{This is a footnote}
-\end{table}
-
-\end{methods}
-
-\begin{figure}[!tpb]%figure1
-%\centerline{\includegraphics{fig01.eps}}
-\caption{Caption, caption.}\label{fig:01}
-\end{figure}
-
-\begin{figure}[!tpb]%figure2
-%\centerline{\includegraphics{fig02.eps}}
-\caption{Caption, caption.}\label{fig:02}
-\end{figure}
-
-\section{Discussion}
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text.
-
-
-
-
-Table~\ref{Tab:01} shows that Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that
-the above method Text Text. Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that
-the above method Text Text. Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that
-the above method Text Text.
-
-
-
-
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%     please remove the " % " symbol from \centerline{\includegraphics{fig01.eps}}
-%     as it may ignore the figures.
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-
-
-
-\section{Conclusion}
-
-(Table~\ref{Tab:01}) Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.
-
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-
-
-
-
-
-\begin{enumerate}
-\item this is item, use enumerate
-\item this is item, use enumerate
-\item this is item, use enumerate
-\end{enumerate}
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text  Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text.
-
-
-
-
-
-
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text. Figure \ref{fig:02} shows that the above method  Text Text Text Text
-
-
-\section*{Acknowledgement}
-Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to know about  text text text text
-
-\paragraph{Funding\textcolon} Text Text Text Text Text Text  Text Text.
-
+\section{Variable Declarations --- Let \& Const}
+\paragraph{ES5 scoping\textcolon}
+Variable scoping in EcmaScript prior to version 6 is specified to use function scope.
+Any variable declared with {\tt var} is accessible in the whole function including
+code preceding the declaration statement. This mechanism is called {\em variable hoisting}.
+If a variable is not declared, but gets defined a value the variable is automatically declared
+on the outermost scope, in case of browsers on {\tt window}. This causes issues in code, due
+to not being obvious in certain places.
+
+Variables in loop definitions are ``leaked'' to the scope of the surrounding function; Code
+with the intention to access or set a variable from an outer scope, having a variable of
+the same name being declared later in its scope ({\em shadowing}) will not operate on the
+outer variable as could be expected.
+
+All problems mentioned are identified by all common linters (i.e. jslint, jshint, eslint)
+or IDEs.
+
+
+\paragraph{let \& const\textcolon}
+The EcmaScript 6 standard introduces two new declaration keywords. {\tt let} declares
+a variable {\tt const} a constant which are block scoped and neither can be redeclared in the
+same scope. Declarations in loop/if-statement headers are scoped in the loop/if block.
+Additionally to avoid unexpected behaviour, access to these variables prior
+to a declaration in the same scope causes an error, called access in
+the {\em Temporal Dead Zone}.
+
+Declarations with {\tt const} do not affect inner mutability of the value; mutating, adding and
+deleting properties is allowed. Mutation of the variable itself is forbidden i.e. re-assigning
+or modifying a literal. Hence {\tt const} declarations without definition cause a syntax error.
+
+In order to ensure babel checking the Temporal Dead Zone the optional rule
+{\tt es6.spec.blockScoping} has to be enabled. This rule causes errors in Internet Explorer 9
+due to it not supporting {\sl Strict Mode} breaking the implementation by mutating the live
+{\tt arguments} variable. Hence this should only turned on in development and disabled in production
+to ensure maximum browser compatibility.
+The main developers have stated in
+\fnurl{https://babeljs.slack.com/archives/development/p1442185357000044}{chat}, that this will
+be fixed using static analysis in the upcoming Babel 6 release, originally slated for 28/09/2015.
+
+\section{Functions}
+\paragraph{Default Parameters\textcolon}
+ES6 allows function parameters to have a default value defined. This value gets used when
+no parameter is passed to the function or the value of the parameter is {\tt undefined} as
+this is per specification the value for not passing an argument.
+
+\begin{lstlisting}
+function fn(param = "default") {
+    return param;
+}
+
+console.log(fn()); // === "default"
+\end{lstlisting}
+
+\paragraph{Rest Parameters}
+Introduced in the new stanard is a new mechanism to collect a varying number of parameters.
+In previous versions of the language this could be achieved by using the array-like
+{\tt arguments} variable.
+
+\begin{lstlisting}
+function fn(a, b, ...rest) {
+    return rest;
+}
+
+console.log(fn(1, 2, 3, 4, 5)); // === [3, 4, 5]
+\end{lstlisting}
+
+\paragraph{Spread Operator}
+The triple-dot-operator used with rest parameters can also be used in function invocations
+to apply an array of parameters to a function. This replaces the need to use {\tt Function.apply}
+when not having to specify a scope.
+
+\begin{lstlisting}
+function fn(a, b, c) {
+    return [a, b, c];
+}
+
+const params = [1, 2, 3]''
+console.log(fn(...params)); // === [1, 2, 3]
+\end{lstlisting}
+
+
+\section{Dummy}
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
 %\bibliographystyle{natbib}
 %\bibliographystyle{achemnat}
 %\bibliographystyle{plainnat}
@@ -192,14 +202,13 @@ Text Text Text Text Text Text  Text Text.  \citealp{Boffelli03} might want to kn
 %
 %\bibliography{Document}
 
-
 \begin{thebibliography}{}
 \bibitem[Bofelli {\it et~al}., 2000]{Boffelli03} Bofelli,F., Name2, Name3 (2003) Article title, {\it Journal Name}, {\bf 199}, 133-154.
 
 \bibitem[Bag {\it et~al}., 2001]{Bag01} Bag,M., Name2, Name3 (2001) Article title, {\it Journal Name}, {\bf 99}, 33-54.
 
-\bibitem[Yoo \textit{et~al}., 2003]{Yoo03}
-Yoo,M.S. \textit{et~al}. (2003) Oxidative stress regulated genes
+% \bibitem[Yoo \textit{et~al}., 2003]{Yoo03}
+% Yoo,M.S. \textit{et~al}. (2003) Oxidative stress regulated genes
 in nigral dopaminergic neurnol cell: correlation with the known
 pathology in Parkinson's disease. \textit{Brain Res. Mol. Brain
 Res.}, \textbf{110}(Suppl. 1), 76--84.
