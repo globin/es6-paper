@@ -245,12 +245,12 @@
   {%
   \def\@oddfoot{\vbox to 13\p@{\hbox{\rule{\textwidth}{1\p@}}\vss
         \hbox to \textwidth{\helvetica
-        \fontsize{7}{9}\fontshape{n}\selectfont \copyright\space Oxford University Press \@copyrightyear.%
+        \fontsize{7}{9}\fontshape{n}\selectfont CC-BY-SA \@copyrightyear%
           \hfill\small\helveticabold\thepage}%
         }}%
   \def\@evenfoot{\vbox to 13\p@{\rule{\textwidth}{1\p@}\vss
         \hbox to \textwidth{\helvetica\thepage\hfill
-          \fontsize{7}{9}\fontshape{n}\selectfont \copyright\space Oxford University Press \@copyrightyear.}%
+          \fontsize{7}{9}\fontshape{n}\selectfont CC-BY-SA \@copyrightyear}%
         }}%
   \let\@evenhead\relax
   \let\@oddhead\relax}
@@ -454,16 +454,7 @@
   \vspace*{\aboveskipchk}%
   \vspace{\dropfromtop}%
   \hbox to \textwidth{%
-  {\helvetica\itshape\bfseries\fontsize{19}{12}\selectfont {\color{gray}BIOINFORMATICS}
-    \hfil
-    \if@appnotes APPLICATIONS NOTE\hfil\fi
-    }%
-\enskip  \parbox[b]{11.3pc}{%
-    \helvetica
-    \flushright\fontsize{8}{10}\fontshape{it}\selectfont
-        Vol. 00\ no. 00 \@pubyear\\
-        \hfill Pages \thepagerange
-  }}
+\enskip}
   \rule{\textwidth}{1\p@}\par%
   \helvetica
   \hbox to \textwidth{%
@@ -475,10 +466,6 @@
         \vspace{4\p@}
     {\helvetica\fontsize{10}{12}\selectfont\raggedright \@address \par}%
     \vspace{4\p@}
-    {\helvetica\fontsize{8}{10}\selectfont\raggedright \@history \par}
-    \vspace{24\p@}
-    {\helvetica\fontsize{10}{12}\selectfont\raggedright \@editor \par}
-    %\vspace{20\p@}
     }%
   }
   \vspace{14.5\p@}%
