@@ -42,22 +42,19 @@
 
 \title[short Title]{ES6 --- Modern Javascript}
 \author[Smarschevski, Gloster]{Jan Smarschevski\,$^{1}$, Robin Gloster\,$^{2}$}
-\address{$^{1}$Department of XXXXXXX, Address XXXX etc.\\
+\address{$^{1}$jan.smarschevski@tum.de\\
 $^{2}$robin.gloster@tum.de}
 
 \maketitle
 
 \begin{abstract}
-
-\section{Motivation:}
-Text Text Text  Text Text Text Text Text Text Text Text
-Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text.
-
-\section{Results:}
-Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text
-
-\section{Availability:}
-Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text
+ECMAScript 6 (ES6/ES2015) is the 6th release (June 2015) of a language specification standardized by
+Ecma International with Javascript being the implementation of this standard. Currently many
+features of ES6 are already supported by the newest versions of modern browsers like Chrome,
+Firefox and Edge. The full compatability table can be found here https://kangax.github.io/compat-
+table/es6/
+There are many new features in ES6 and some of the more important ones will be presented in this
+elaboration.
 
 \section{Contact:} \href{name@bio.com}{name@bio.com}
 \end{abstract}
@@ -102,6 +99,47 @@ The main developers have stated in
 be fixed using static analysis in the upcoming Babel 6 release, originally slated for 28/09/2015.
 
 \section{Functions}
+\paragraph{Arrow Functions}
+Arrow functions bring a new and clearer syntax for writing functions, although
+they always are anonymous and therefore not a replacement for the function keyword.
+In ES5: function (arguments) { expression }
+In ES6: (arguments) => {expression}
+This is very handy for example to reduce a short function to a single line expression.
+These functions also introduce new functionality, namely lexical scoping.
+In Javascript functions always create their own scope, but arrow functions
+rather inherit their scope from the enclosing function.
+
+\begin{lstlisting}
+function countTables(waiter) {
+    this.counter = 0;
+    waiter.askSomeone(
+        (response) => {
+            this.counter = response + 1;
+        }
+    );
+}
+\end{lstlisting}
+
+Without arrow functions the {\tt this} reference would be different in
+{\tt countTables()} and {\tt askSomeone()} and therefore a
+solution would be to use {\tt .bind(this)} on the inner function or store
+{\tt this} in a variable:
+
+\begin{lstlisting}
+function countTables(waiter) {
+    var self = this;
+    this.counter = 0;
+    waiter.askSomeone(
+        (response) => {
+            self.counter = response + 1;
+        }
+    );
+}
+\end{lstlisting}
+
+This is pretty cumbersome and non-intuitive, which is why arrow functions
+have been introduced to provide a clear solution for similar problems.
+
 \paragraph{Default Parameters\textcolon}
 ES6 allows function parameters to have a default value defined. This value gets used when
 no parameter is passed to the function or the value of the parameter is {\tt undefined} as
@@ -115,7 +153,7 @@ function fn(param = "default") {
 console.log(fn()); // === "default"
 \end{lstlisting}
 
-\paragraph{Rest Parameters}
+\paragraph{Rest Parameters\textcolon}
 Introduced in the new standard is a new mechanism to collect a varying number of parameters.
 In previous versions of the language this could be achieved by using the array-like
 {\tt arguments} variable.
@@ -142,60 +180,140 @@ const params = [1, 2, 3];
 console.log(fn(...params)); // === [1, 2, 3]
 \end{lstlisting}
 
+\section{for-of-loop}
+In ES5 there is the for-in loop and the forEach loop.
+The for-in loop loops over all properties of an object. Example:
+\begin{lstlisting}
+var food = [“banana”, “orange”, “apple”]
+food.RandomProperty = “123”;
+for (var x in food) { ... }
+\end{lstlisting}
+The goal is to loop over the food array, but with the for-of loop we would also loop over the property
+“RandomProperty” and most likely get a unwanted result.
+The forEach loop in this example would be:
+\begin{lstlisting}
+food.forEach(function (entry) { ... }
+\end{lstlisting}
+This loop actually loops over the array elements only, but there is a problem. You can’t return or
+break out of the forEach loop. This is not very efficient as the array is always fully traversed.
+Therefore the for-of loop was introducted as both loops (for-in and forEach) have their flaws.
+Staying in the example:
+\begin{lstlisting}
+for (var x of food) { ...}
+\end{lstlisting}
+
+ would give the desired result, without any quirks. A very important note is
+that the for-of loop only works for iterable objects like array, map or set (ES6 introduces the new
+datastructres map and set).
+
 \section{Destructuring}
 The possibility to destructure arrays and objects has been made possible with
 the ES6 standard.
 
 \begin{lstlisting}
-const [a, b] = [1, 2];
-console.log(a, b) // => 1 2
+let [a, b] = [1, 2];
+console.log(a, b); // => 1, 2
 \end{lstlisting}
 
-Missing values are set to {\tt undefined}; 
-\section{Dummy}
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Missing values are set to {\tt undefined}; superflous are ignored; nested destructring
+defaults and collecting rest values at the end are possible.
+Practical appliances are returning multiple values or swapping variables
+without the need for a temporary variable.
 
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+\begin{lstlisting}
+let [a, b, c] = [1, 2];
+console.log(a, b, c); // => 1, 2, undefined
 
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+let [d, e] = [1, 2, 3];
+console.log(d, e); // => 1, 2
 
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+let [f, [g, [h]]] = [1, [2, [3]]];
+console.log(f, g, h); // => 1, 2, 3
 
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+let [j, k, ...rest] = [1, 2, 3, 4, 5];
+console.log(j, k, rest); // => 1, 2, [3, 4, 5]
 
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+let [l, m, n = 3] = [1, 2];
+console.log(l, m, n); // => 1, 2, 3
 
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+let x = 1, y = 2;
+[x, y] = [y, x];
+console.log(x, y); // => 2, 1
+\end{lstlisting}
 
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
-Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text  Text Text Text Text Text T
+Object destructuring
+\begin{lstlisting}
+
+\end{lstlisting}
+
+\section{Class \& Subclassing}
+Objects already exists in ES5, but the main problem is the non-intuitive and complex
+way to write object-oriented programs. ES6 introduces syntactical sugar for objects
+and prototypes. The main advantage is the clean and concise syntax for creating
+objects and for dealing with inheritance. The syntax is well-known from other
+object-oriented languages like Java or C++.
+
+ Example for a class in ES6:
+\begin{lstlisting}
+class Circle {
+//add static property (actually already an ES7 feature)
+static circlesMade = 0;
+// instance property
+color = 'red';
+constructor(radius) {
+this.radius = radius;
+Circle.circlesMade++;
+}
+//class method
+static draw(circle, canvas) {
+//Code for drawing on Canvas
+}
+//instance method
+area() {
+return Math.pow(this.radius, 2) * Math.PI;
+}
+//getter and setter
+get radius() {
+return this.radius;
+}
+set radius(radius) {
+if (!Number.isInteger(radius))
+throw new Error("Circle radius must be an integer.");
+this._radius = radius;
+};
+}
+}
+
+//example for subclassing with the super keyword
+class ScalableCircle extends Circle {
+constructor(scalingFactor) {
+super();
+this.scalingFactor = scalingFactor;
+}
+get radius() {
+return this.scalingFactor * super.radius;
+}
+set radius(radius) {
+throw new Error("ScalableCircle radius is constant.");
+}
+}
+\end{lstlisting}
+
+5. Template Strings
+Template Strings enhance the way for writing strings. The main feature is to manipulate the string by
+directly embedding an expression into the string.
+Example:
+\begin{lstlisting}
+var a = 3;
+var b = 5;
+var sum = `Your total is : ${a + b}`;
+\end{lstlisting}
+So the syntax are two backticks (!) and the dollar sign with the curly braces.
+Inside the curly braces you can put any expression like inline math or a function call.
+With Template Strings you can now also write multi line strings without any ``hacks'' like
+concatenation or line break character. All characters like whitespace in a template string
+are not ignored.
+
 %\bibliographystyle{natbib}
 %\bibliographystyle{achemnat}
 %\bibliographystyle{plainnat}
