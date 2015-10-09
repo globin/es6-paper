@@ -83,23 +83,84 @@ or IDEs.
 
 \paragraph{let \& const\textcolon}
 The EcmaScript 6 standard introduces two new declaration keywords. {\tt let} declares
-a variable {\tt const} a constant which are block scoped and neither can be redeclared
+a variable, {\tt const} a constant which are block scoped and neither can be redeclared
 in the same scope. Declarations in loop/if-statement headers are scoped in the loop/if
 block. Additionally to avoid unexpected behaviour, access to these variables prior
 to a declaration in the same scope causes an error, called access in
 the {\em Temporal Dead Zone}.
 
+\vfill\break
+
+Possibly unexpected behaviour:
+\begin{lstlisting}
+function outer() {
+    var someVar = 1;
+
+    function inner() {
+        someVar = 2;
+        var someVar = 3;
+    }
+
+    inner();
+    console.log(someVar); // 1
+}
+
+outer();
+\end{lstlisting}
+
+Error with {\tt let}:
+\begin{lstlisting}
+function outer() {
+    let someVar = 1;
+
+    function inner() {
+        someVar = 2;
+        let someVar = 3;
+    }
+
+    inner();
+    console.log(someVar);
+}
+
+outer();
+
+// Uncaught ReferenceError: someVar is not defined
+// - temporal dead zone
+\end{lstlisting}
+
 Declarations with {\tt const} do not affect inner mutability of the value;
 mutating, adding and deleting properties is allowed. Mutation of the variable
 itself is forbidden i.e. re-assigning or modifying a literal. Hence {\tt const}
 declarations without definition cause a syntax error. Generally the recommendation
-is to use const whenever possible instead of var and otherwise use let.
+is to use {\tt const} whenever possible instead of {\tt var} and otherwise use {\tt let}.
+
+\vfill\break
+
+\begin{lstlisting}
+const var1 = 0;
+// var1 = 1;
+
+// Line 2: "var1" is read-only
+
+const var1 = {
+    foo: 1,
+    bar: 2
+};
+
+
+var1.foo = 3;
+
+// var1 = {
+//     "foo": 3,
+//     "bar": 2,
+// }
+\end{lstlisting}
 
 In order to ensure babel checking the Temporal Dead Zone the optional rule
 {\tt es6.spec.blockScoping} has to be enabled. This rule causes errors in
 Internet Explorer 9 due to it not supporting {\sl Strict Mode} breaking the
 implementation by mutating the live {\tt arguments} variable. Hence this
-should only turned on in development and disabled in production
+should only be turned on in development and disabled in production
 to ensure maximum browser compatibility. The main developers have stated in
 \fnurl{https://babeljs.slack.com/archives/development/p1442185357000044}{chat},
 that this will be fixed using static analysis in the upcoming Babel 6 release,
@@ -110,8 +171,8 @@ originally slated for 28/09/2015.
 bring a new and clearer syntax for writing functions, although
 they always are anonymous and therefore not a replacement for the function keyword.
 \begin{itemize}
-    \item ES5: \tt{function (arguments) \{ expression \}}
-    \item ES6: \tt{(arguments) => \{ expression \}}
+    \item ES5: {\tt function (arguments) \{ expression \}}
+    \item ES6: {\tt (arguments) => \{ expression \}}
 \end{itemize}
 This for example is very handy to reduce a short function to a single line expression.
 These functions also introduce new functionality, namely lexical scoping.
@@ -129,6 +190,8 @@ function countTables(waiter) {
 }
 \end{lstlisting}
 
+\vfill\break
+
 Without arrow functions the {\tt this} reference would be different in
 {\tt countTables()} and {\tt askSomeone()} and therefore a
 solution would be to use {\tt .bind(this)} on the inner function or store
@@ -139,7 +202,7 @@ function countTables(waiter) {
     var self = this;
     this.counter = 0;
     waiter.askSomeone(
-        (response) => {
+        function (response) {
             self.counter = response + 1;
         }
     );
@@ -199,28 +262,42 @@ The for-in loop loops over all properties of an object. Example:
 
 \begin{lstlisting}
 var food = ["banana", "orange", "apple"];
-food.RandomProperty = "123";
-for (var x in food) { ... }
+food.RandomProperty = 123;
+
+for (var x in food) {
+    console.log(food[x]);
+}
+
+// "banana", "orange", "apple", 123
 \end{lstlisting}
 
-The goal is to loop over the food array, but with the for-of loop we would
-also loop over the property “RandomProperty” and most likely get a unwanted result.
+The goal is to loop over the food array, but the for-of loop would
+also loop over the property {\tt RandomProperty} and most likely
+get an unwanted result.
+
 The forEach loop in this example would be:
 \begin{lstlisting}
 food.forEach(function (entry) { ... }
 \end{lstlisting}
-This loop actually loops over the array elements only, but there is a problem.
-You cannot return or break out of the forEach loop. This is not very efficient
-as the array is always fully traversed. Therefore the for-of loop was introducted
+This loop actually loops over the array elements only, but there is a problem
+as there is no possibility to return or break out of the forEach loop.
+This is not very efficient as the array is always fully traversed.
+Therefore the for-of loop has been introduced
 as both loops (for-in and forEach) have their flaws.
+
 Keeping to the example:
 \begin{lstlisting}
-for (var x of food) { ... }
+for (var x of food) {
+    console.log(x);
+}
+
+// "banana", "orange", "apple"
 \end{lstlisting}
 
 This would give the desired result, without any quirks. A very important note is
 that the for-of loop only works for iterable objects like Array, Map or Set
-(ES6 introduces the new datastructres Map and Set).
+(ES6 introduces the new data structures Map and Set). Other objects can be made
+iterable by defining {\tt Symbol.iterator}.
 
 \section{Destructuring}
 The possibility to destructure arrays and objects has been made possible with
@@ -231,10 +308,12 @@ let [a, b] = [1, 2];
 console.log(a, b); // => 1, 2
 \end{lstlisting}
 
-Missing values are set to {\tt undefined}; superflous are ignored; nested destructring
+Missing values are set to {\tt undefined}; superfluous are ignored; nested destructuring
 defaults and collecting rest values at the end are possible.
 Practical appliances are returning multiple values or swapping variables
 without the need for a temporary variable.
+
+\vfill\break
 
 \begin{lstlisting}
 let [a, b, c] = [1, 2];
@@ -289,18 +368,24 @@ let some = {
     object: 3
 };
 
-let { deep: [one, { nested: two }], object: three } = some;
+let {
+    deep: [
+        one, { nested: two }
+    ],
+    object: three
+} = some;
 
 console.log(one, two, three); // 1, 2, 3
 \end{lstlisting}
 
 \section{Class \& Subclassing}
-Objects already exists in ES5, but the main problem is the non-intuitive and complex
-syntax for object-oriented programs, especially using inheritance. ES6 introduces
-syntactical sugar for objects and prototypes. The main advantage is the clean
-and concise syntax for creating objects and for dealing with inheritance.
-The syntax is well-known from other object-oriented languages like Java or C++.
-ES7 will be adding handling of properties already being used in the following example.
+Objects and inheritance via prototype chains have already existed prior to ES5,
+but the main problem is the non-intuitive and complex syntax for object-oriented
+programs, especially using inheritance. ES6 introduces syntactical sugar for
+objects and prototypes. The main advantage is the clean and concise syntax
+for creating objects and for dealing with inheritance. The syntax is well-known
+from other object-oriented languages like Java or C++. ES7 will be adding
+handling of properties already being used in the following example.
 
 \begin{lstlisting}
 class Circle {
@@ -341,6 +426,16 @@ class Circle {
     }
 }
 
+\end{lstlisting}
+
+Subclassing syntax is similar to most object oriented
+languages using {\tt extends} to inherit and {\tt super}
+to access the parent's class.
+
+\vfill\break
+
+\begin{lstlisting}
+
 // Subclassing
 class ScalableCircle extends Circle {
     constructor(scalingFactor) {
@@ -370,11 +465,13 @@ var a = 3;
 var b = 5;
 var sum = `Your total is: ${a + b}`;
 \end{lstlisting}
-So the syntax are two backticks (!) and the dollar sign with the curly braces.
+The syntax are two backticks and the dollar sign with the curly braces.
 Inside the curly braces you can put any expression like inline math or a function call.
 With Template Strings you can now also write multi line strings without any ``hacks'' like
 concatenation or line break character. All characters like whitespace in a template string
 are not ignored.
+
+\vfill\break
 
 \section{Modules}
 ES6 also adds modules to the language, as a language-level alternative to AMD and
@@ -403,45 +500,49 @@ var toExport = {};
 
 export default toExport;
 \end{lstlisting}
-%\bibliographystyle{natbib}
-%\bibliographystyle{achemnat}
-%\bibliographystyle{plainnat}
-%\bibliographystyle{abbrv}
-%\bibliographystyle{bioinformatics}
-%
-%\bibliographystyle{plain}
-%
-%\bibliography{Document}
+
+\section{Further ES6 Additions}
+Apart from the additions mentioned above further additions have been made:
+\begin{itemize}
+    \item Generators
+    \item improved unicode support
+    \item Map + Set + WeakMap + WeakSet data structures
+    \item Proxy
+    \item Symbol
+    \item Array, Function, Object and other built-in objects are sub-classable
+    \item API additions to Array, Function, Object etc.
+    \item Binary and Object Literals
+    \item Reflect API
+\end{itemize}
+
+For EcmaScript 7 some more features are in draft:
+\begin{itemize}
+    \item Decorators
+    \item Bind Operator
+    \item async/await
+    \item List \& Generator comprehensions
+\end{itemize}
 
 \begin{thebibliography}{}
-\bibitem[Bofelli {\it et~al}., 2000]{Boffelli03} Bofelli,F., Name2, Name3 (2003) Article title, {\it Journal Name}, {\bf 199}, 133-154.
+    \bibitem{template}Getting Literal With ES6 Template Strings, \url{https://developers.google.com/web/updates/2015/01/ES6-Template-Strings} 09/10/2015
 
-\bibitem[Bag {\it et~al}., 2001]{Bag01} Bag,M., Name2, Name3 (2001) Article title, {\it Journal Name}, {\bf 99}, 33-54.
+    \bibitem{scoping}ES6 arrow functions, syntax and lexical scoping, \url{http://toddmotto.com/es6-arrow-functions-syntaxes-and-lexical-scoping/} 09/10/2015
 
-% \bibitem[Yoo \textit{et~al}., 2003]{Yoo03}
-% Yoo,M.S. \textit{et~al}. (2003) Oxidative stress regulated genes
-in nigral dopaminergic neurnol cell: correlation with the known
-pathology in Parkinson's disease. \textit{Brain Res. Mol. Brain
-Res.}, \textbf{110}(Suppl. 1), 76--84.
+    \bibitem{babel}Learn ES2015, \url{https://babeljs.io/docs/learn-es2015/} 09/10/2015
 
-\bibitem[Lehmann, 1986]{Leh86}
-Lehmann,E.L. (1986) Chapter title. \textit{Book Title}. Vol.~1, 2nd edn. Springer-Verlag, New York.
+    \bibitem{tdz}ES6 Let, Const and the “Temporal Dead Zone” (TDZ) in Depth, \url{http://ponyfoo.com/articles/es6-let-const-and-temporal-dead-zone-in-depth} 09/10/2015
 
-\bibitem[Crenshaw and Jones, 2003]{Cre03}
-Crenshaw, B.,III, and Jones, W.B.,Jr (2003) The future of clinical
-cancer management: one tumor, one chip. \textit{Bioinformatics},
-doi:10.1093/bioinformatics/btn000.
+    \bibitem{in-depth}ES6 In Depth Articles \url{https://hacks.mozilla.org/category/es6-in-depth/} 09/10/2015
 
-\bibitem[Auhtor \textit{et~al}. (2000)]{Aut00}
-Auhtor,A.B. \textit{et~al}. (2000) Chapter title. In Smith, A.C.
-(ed.), \textit{Book Title}, 2nd edn. Publisher, Location, Vol. 1, pp.
-???--???.
+    \bibitem{spec}ECMAScript® 2015 Language Specification \url{http://www.ecma-international.org/ecma-262/6.0/} 09/10/2015
 
-\bibitem[Bardet, 1920]{Bar20}
-Bardet, G. (1920) Sur un syndrome d'obesite infantile avec
-polydactylie et retinite pigmentaire (contribution a l'etude des
-formes cliniques de l'obesite hypophysaire). PhD Thesis, name of
-institution, Paris, France.
+    \bibitem{basti-pres}Warum ECMAScript 6 die Welt ein Stückchen besser macht \url{http://de.slideshare.net/sspringer82/warum-ecmascript-6-die-welt-ein-stckchen-besser-macht} 09/10/2015
+
+    \bibitem{classes}Classes \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes} 09/10/2015
+
+    \bibitem{modules}ECMAScript 6 modules: the final syntax \url{http://www.2ality.com/2014/09/es6-modules-final.html} 09/10/2015
+
+    \bibitem{getting-started}Getting started with ECMAScript 6 \url{http://www.2ality.com/2015/08/getting-started-es6.html} 09/10/2015
 
 \end{thebibliography}
 \end{document}
