@@ -58,6 +58,11 @@ There are many new features in ES6 and some of the more important ones will
 be presented in this elaboration.
 \end{abstract}
 
+\section{Transpiler}
+To use most of the ES6 features in all modern browsers and Internet Explorer 9
+and newer \fnurl{https://babeljs.io}{Babel} can be used to transpile ES6 source
+code to ES5.
+
 \section{Variable Declarations --- Let \& Const}
 \paragraph{ES5 scoping\textcolon}
 Variable scoping in EcmaScript prior to version 6 is specified to use function scope.
@@ -363,7 +368,7 @@ directly embedding an expression into the string.
 \begin{lstlisting}
 var a = 3;
 var b = 5;
-var sum = `Your total is : ${a + b}`;
+var sum = `Your total is: ${a + b}`;
 \end{lstlisting}
 So the syntax are two backticks (!) and the dollar sign with the curly braces.
 Inside the curly braces you can put any expression like inline math or a function call.
@@ -371,6 +376,33 @@ With Template Strings you can now also write multi line strings without any ``ha
 concatenation or line break character. All characters like whitespace in a template string
 are not ignored.
 
+\section{Modules}
+ES6 also adds modules to the language, as a language-level alternative to AMD and
+CommonJS, with the following syntax.
+
+\begin{lstlisting}
+// AMD
+define(['http'], function (http) {
+    var toExport = {};
+
+    return toExport;
+});
+
+
+// CommonJS
+var http = require('http');
+
+var toExport = {};
+
+module.exports = toExport;
+
+// ES6
+import http from 'http';
+
+var toExport = {};
+
+export default toExport;
+\end{lstlisting}
 %\bibliographystyle{natbib}
 %\bibliographystyle{achemnat}
 %\bibliographystyle{plainnat}
